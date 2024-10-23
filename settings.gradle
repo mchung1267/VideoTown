@@ -1,0 +1,6 @@
+rootProject.name = 'VideoTown'
+
+include 'eureka-server'
+include 'gateway-service'
+include 'video-service'
+include 'payout-service'
