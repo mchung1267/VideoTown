@@ -3,7 +3,7 @@ package com.mchung.authservice.service;
 import com.mchung.authservice.dto.LoginRequestDto;
 import com.mchung.authservice.dto.SignupRequestDto;
 import com.mchung.authservice.entity.Member;
-import com.mchung.authservice.jwt.JwtUtil;
+import com.mchung.authservice.utils.JwtUtil;
 import com.mchung.authservice.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +21,7 @@ public class MemberServiceImpl implements MemberService {
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
 
+    @Override
     public Member signup(SignupRequestDto signupRequestDto) {
         try {
             if(memberRepository.findByEmail(signupRequestDto.getEmail()).isPresent()) {
@@ -46,6 +47,7 @@ public class MemberServiceImpl implements MemberService {
             throw new IllegalArgumentException("저장 중 예상치 못한 오류가 발생했습니다.");
         }
     }
+    @Override
     public String signin(LoginRequestDto loginRequestDto) {
         try {
             Optional<Member> optionalMember = memberRepository.findByEmail(loginRequestDto.getEmail());

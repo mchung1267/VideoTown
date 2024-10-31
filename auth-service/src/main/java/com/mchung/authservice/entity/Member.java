@@ -1,15 +1,15 @@
 package com.mchung.authservice.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
 @NoArgsConstructor
 @Table(name="members")
+@AllArgsConstructor
+@Data
 public class Member {
 
     @Id
@@ -24,12 +24,6 @@ public class Member {
 
     @Column(nullable = false)
     private String name;
-
-    @Column(nullable=false)
-    private Long memberClass;
-
-    @Column
-    private Long advertiserClass;
 
     @Column
     private String calcPolicy;

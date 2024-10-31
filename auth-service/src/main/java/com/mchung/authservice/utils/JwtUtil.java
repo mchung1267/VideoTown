@@ -1,4 +1,4 @@
-package com.mchung.authservice.jwt;
+package com.mchung.authservice.utils;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -46,7 +46,7 @@ public class JwtUtil {
                         .setSubject("" + id)
                         .setClaims(claims)
                         .setExpiration(new Date(date.getTime() + maxToken))
-                        .signWith(signatureAlgorithm, key)
+                        .signWith(key, signatureAlgorithm)
                         .compact();
     }
 }
