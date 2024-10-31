@@ -15,6 +15,8 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -27,25 +29,28 @@ public class JwtFilter extends AbstractGatewayFilterFactory<JwtFilter.Config> {
     public JwtFilter() {
         super(Config.class);
     }
-
+    @Override
     public GatewayFilter apply(Config config) {
         return(exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
             ServerHttpResponse response = exchange.getResponse();
 
-            if(!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
+            String path = request.getURI().getPath();
+
+            if(path.equals("/auth/signin") || path.equals("/auth/signout") || path.equals("/auth/signup")) {
                 return chain.filter(exchange);
+            }
+            if (!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
+                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                return exchange.getResponse().setComplete();
             }
 
             String authHeader = request.getHeaders().getOrEmpty(HttpHeaders.AUTHORIZATION).get(0);
-            if(!authHeader.startsWith("Bearer ")) {
-                return handleUnauthorized(response, "Invalid Authorization header format.");
-            }
 
             String token = authHeader.substring(7);
 
             try {
-                Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJwt(token).getBody();
+                Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
                 ServerHttpRequest.Builder requestBuilder = request.mutate();
                 for(Map.Entry<String, Object> entry : claims.entrySet()) {
                     String claimKey = "X-Claim-" + entry.getKey();
