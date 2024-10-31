@@ -35,7 +35,7 @@ public class MemberServiceImpl implements MemberService {
             Member member = new Member();
             member.setEmail(signupRequestDto.getEmail());
             member.setPassword(passwordEncoder.encode(signupRequestDto.getPassword()));
-
+            member.setName(signupRequestDto.getName());
             return storeAccount(member);
 
         }

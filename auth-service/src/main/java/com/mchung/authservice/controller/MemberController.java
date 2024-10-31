@@ -22,8 +22,8 @@ public class MemberController {
 
     @PostMapping("/signup")
     public String signup(@RequestBody SignupRequestDto signupRequestDto) throws BadRequestException {
-        Member member = memberService.signup(signupRequestDto);
-        return "가입에 성공했습니다.";
+        memberService.signup(signupRequestDto);
+        return signupRequestDto.toString();
     }
 
     @PostMapping("/signin")

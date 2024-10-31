@@ -25,10 +25,10 @@ public class Member {
     @Column(nullable = false)
     private String name;
 
-    @Column
+    @Column(nullable = true)
     private String calcPolicy;
 
-    @Column
+    @Column(nullable = true)
     private String type;
 
 }
