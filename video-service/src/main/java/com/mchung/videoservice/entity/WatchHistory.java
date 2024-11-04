@@ -25,7 +25,8 @@ public class WatchHistory {
 
     @Column(name="viewedAt")
     private Timestamp viewedAt;
-
+    @Column(name="beginsAt")
+    private Long beginsAt;
     @Column(name="lastStamp")
     private Long lastStamp;
 
