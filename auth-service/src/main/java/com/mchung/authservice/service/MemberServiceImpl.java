@@ -36,6 +36,8 @@ public class MemberServiceImpl implements MemberService {
             member.setEmail(signupRequestDto.getEmail());
             member.setPassword(passwordEncoder.encode(signupRequestDto.getPassword()));
             member.setName(signupRequestDto.getName());
+            member.setType("user");
+            member.setCalcPolicy("monthly");
             return storeAccount(member);
 
         }
