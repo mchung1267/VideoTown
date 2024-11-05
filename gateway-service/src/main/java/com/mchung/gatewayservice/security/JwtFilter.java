@@ -37,7 +37,7 @@ public class JwtFilter extends AbstractGatewayFilterFactory<JwtFilter.Config> {
 
             String path = request.getURI().getPath();
 
-            if(path.equals("/auth/signin") || path.equals("/auth/signout") || path.equals("/auth/signup")) {
+            if(path.equals("/auth/signin") || path.equals("/auth/logout") || path.equals("/auth/signup")) {
                 return chain.filter(exchange);
             }
             if (!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {

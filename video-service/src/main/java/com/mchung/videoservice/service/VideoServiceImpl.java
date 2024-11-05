@@ -86,12 +86,26 @@ public class VideoServiceImpl implements VideoService {
         }
     }
     private Video createNewVideo(Long userId, UploadVideoDto uploadVideoDto) {
+        StringBuilder sb = new StringBuilder();
         Video video = new Video();
         video.setCreatorId(userId);
         video.setRevenueClass(1L);
         video.setViews(0L);
         video.setUploadDate(new Timestamp(System.currentTimeMillis()));
         video.setLength(uploadVideoDto.getLength());
+        if(uploadVideoDto.getLength() > 300 && uploadVideoDto.getLength() < 600) {
+            sb.append("0");
+            video.setAdCoordination(sb.toString());
+            video.setTotalLength(uploadVideoDto.getLength() + 15);
+        } else if(uploadVideoDto.getLength() > 600) {
+            sb.append("0").append(" ");
+            sb.append("315");
+            video.setAdCoordination(sb.toString());
+            video.setTotalLength(uploadVideoDto.getLength() + 30);
+        } else {
+            video.setTotalLength(uploadVideoDto.getLength());
+        }
+
         video.setTitle(uploadVideoDto.getTitle());
         return finalizeUpload(video);
 

@@ -29,6 +29,12 @@ public class Video {
     @Column(name="length")
     private Long length;
 
+    @Column(name="totalLength")
+    private Long totalLength;
+
+    @Column(name="adCoordination")
+    private String adCoordination;
+
     @Column(name="uploadDate")
     private Timestamp uploadDate;
 

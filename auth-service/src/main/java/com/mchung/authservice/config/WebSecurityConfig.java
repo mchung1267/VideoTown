@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.io.IOException;
 
@@ -36,7 +37,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .anyRequest().permitAll())
                 .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(new FailedAuthenticationEntryPoint())
-                );
+                ).logout(logout ->
+                        logout.logoutRequestMatcher(new AntPathRequestMatcher("/auth/signout")).logoutSuccessUrl("/auth/logout").invalidateHttpSession(true));
         return http.build();
     }
     static class FailedAuthenticationEntryPoint implements AuthenticationEntryPoint {
