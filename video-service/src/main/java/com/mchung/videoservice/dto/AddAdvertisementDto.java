@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class WatchAdDto {
-    private Long adId;
-    private Long viewerId;
-    private Long creatorId;
+public class AddAdvertisementDto {
+    Long videoLength;
+    Long advertiserId;
 }
