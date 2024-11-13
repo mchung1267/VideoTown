@@ -28,7 +28,7 @@ public class DailyRevenue {
     private Long advertisementId;
 
     @Column(name="totalRevenue")
-    private Long totalRevenue;
+    private Double totalRevenue;
 
     @Column(name="effectiveDate")
     private Date effectiveDate;

@@ -25,11 +25,11 @@ public class Scheduler {
     public void updateDailyRevenue() throws InterruptedException {
         List<Member> members = memberRepository.findAll();
         for (Member member : members) {
-            double revenue = 0.0;
             Date today = new Date(System.currentTimeMillis());
             List<AdWatchHistory> memberAdsWatched = adWatchHistoryRepository.findAdWatchHistoriesByCreatorIdAndViewedAt(member.getId(), today);
             List<WatchHistory> memberVideosWatched = watchHistoryRepository.findByCreatorIdAndViewedAt(member.getId(), today);
             for (AdWatchHistory adWatchHistory : memberAdsWatched) {
+                double revenue = 0.0;
                 Advertisement adInHisotry = advertisementRepository.findById(adWatchHistory.getAdId()).get();
                 if(adWatchHistory.getFullyWatched()) {
                     if(adInHisotry.getAdClass() == 1) {
@@ -41,9 +41,17 @@ public class Scheduler {
                     } else if(adInHisotry.getAdClass() == 4) {
                         revenue += 20;
                     }
+                    DailyRevenue dailyRevenue = new DailyRevenue();
+                    dailyRevenue.setCreatorId(member.getId());
+                    dailyRevenue.setAdvertisementId(adWatchHistory.getAdId());
+                    dailyRevenue.setTotalRevenue(revenue);
+                    dailyRevenue.setEffectiveDate(today);
+                    dailyRevenueRepository.save(dailyRevenue);
                 }
+
             }
             for (WatchHistory watchHistory : memberVideosWatched) {
+                double revenue = 0.0;
                 Video videoInHistory = videoRepository.findById(watchHistory.getVideoId()).get();
                 if(watchHistory.getViewDone()) {
                     if(videoInHistory.getRevenueClass() == 1) {
@@ -55,6 +63,12 @@ public class Scheduler {
                     } else if(videoInHistory.getRevenueClass() == 4) {
                         revenue += 1.5;
                     }
+                    DailyRevenue dailyRevenue = new DailyRevenue();
+                    dailyRevenue.setCreatorId(member.getId());
+                    dailyRevenue.setVideoId(watchHistory.getVideoId());
+                    dailyRevenue.setTotalRevenue(revenue);
+                    dailyRevenue.setEffectiveDate(today);
+                    dailyRevenueRepository.save(dailyRevenue);
                 }
             }
         }
