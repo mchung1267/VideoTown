@@ -1,13 +1,12 @@
 package com.mchung.videoservice.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 @Entity
 @NoArgsConstructor
@@ -24,9 +23,10 @@ public class WatchHistory {
 
     @Column(name="viewerId")
     private Long viewerId;
-
+    @Column(name="creatorId")
+    private Long creatorId;
     @Column(name="viewedAt")
-    private Timestamp viewedAt;
+    private Date viewedAt;
     @Column(name="beginsAt")
     private Long beginsAt;
     @Column(name="lastStamp")

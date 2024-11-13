@@ -5,7 +5,6 @@ import com.mchung.videoservice.dto.UploadVideoDto;
 import com.mchung.videoservice.dto.WatchAdDto;
 import com.mchung.videoservice.dto.WatchVideoDto;
 import com.mchung.videoservice.entity.Advertisement;
-import com.mchung.videoservice.entity.Member;
 import com.mchung.videoservice.entity.Video;
 import com.mchung.videoservice.entity.WatchHistory;
 import com.mchung.videoservice.repository.AdvertisementRepository;
@@ -17,6 +16,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
@@ -80,8 +80,9 @@ public class VideoServiceImpl implements VideoService {
 
         watchHistory.setViewerId(userId);
         watchHistory.setVideoId(watchVideoDto.getVideoId());
-        watchHistory.setViewedAt(new Timestamp(System.currentTimeMillis()));
+        watchHistory.setViewedAt(new Date(System.currentTimeMillis()));
         watchHistory.setViewDone(false);
+        watchHistory.setCreatorId(video.getCreatorId());
         if(!alreadyWatched) {
             if(video.getTotalLength() < 315) {
                 if(watchVideoDto.getLastStamp() >= 30) {

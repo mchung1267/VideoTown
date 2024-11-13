@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 @Entity
@@ -27,7 +28,7 @@ public class AdWatchHistory {
     private Long viewerId;
 
     @Column(name="viewedAt")
-    private Timestamp viewedAt;
+    private Date viewedAt;
 
     @Column(name="fullyWatched")
     private Boolean fullyWatched;

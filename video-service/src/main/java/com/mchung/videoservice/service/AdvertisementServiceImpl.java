@@ -10,10 +10,9 @@ import com.mchung.videoservice.repository.VideoRepository;
 import com.mchung.videoservice.repository.WatchHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.hibernate.Length;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +58,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         adWatchHistory.setAdId(watchAdDto.getAdId());
         adWatchHistory.setViewerId(watchAdDto.getViewerId());
         adWatchHistory.setCreatorId(watchAdDto.getCreatorId());
-        adWatchHistory.setViewedAt(new Timestamp(System.currentTimeMillis()));
+        adWatchHistory.setViewedAt(new Date(System.currentTimeMillis()));
         if(lastStamp >= 15 && lastStamp <= 300) {
             adWatchHistory.setFullyWatched(true);
         } else if(lastStamp >= 330) {
