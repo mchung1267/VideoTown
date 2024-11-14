@@ -21,4 +21,9 @@ public class PayoutController {
     public String welcome(){
         return "Welcome meow Service";
     }
+
+    @GetMapping("/report")
+    public String report(){
+        return "report";
+    }
 }
