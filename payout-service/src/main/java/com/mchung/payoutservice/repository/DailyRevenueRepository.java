@@ -11,5 +11,5 @@ public interface DailyRevenueRepository extends JpaRepository<DailyRevenue, Long
     List<DailyRevenue> findDailyRevenuesByAdvertisementId(Long advertisementId);
     List<DailyRevenue> findDailyRevenuesByCreatorId(Long creatorId);
     List<DailyRevenue> findDailyRevenuesByCreatorIdAndEffectiveDateBetween(Long creatorId, Date a, Date b);
-
+    List<DailyRevenue> findDailyRevenuesByCreatorIdAndEffectiveDate(Long creatorId, Date a);
 }
