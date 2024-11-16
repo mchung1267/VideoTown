@@ -22,7 +22,7 @@ public class DailyRevenueServiceImpl implements DailyRevenueService {
     private final VideoRepository videoRepository;
     private final WatchHistoryRepository watchHistoryRepository;
     private final ReveneueReportRepository reveneueReportRepository;
-
+    @Override
     public String getDailyRevenueReport(Long memberId, String term) {
         Date today = new Date(System.currentTimeMillis());
         RevenueReport revenueReport = reveneueReportRepository.findByUserIdAndEffectiveDate(memberId, today).get();
