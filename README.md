@@ -44,7 +44,7 @@ MSA 구조를 사용하여, 서비스를 성공적으로 분리 하였습니다.
 
 - Eureka Server
     - Eureka Server을 통해 MSA의 기초를 구현하였습니다.
-- Eureka Gateway
+- Cloud Gateway
     - 게이트웨이에 Spring Security 필터 등을 적용하여, 로그인하지 않을 경우 각 서비스로의 접근을 차단 하였습니다.
 - PayoutService
     - 정산 데이터와 관련된 서비스를 따로 분리하였습니다.
