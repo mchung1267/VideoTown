@@ -5,6 +5,8 @@ import com.mchung.videoservice.dto.WatchVideoDto;
 import com.mchung.videoservice.entity.Video;
 import com.mchung.videoservice.entity.WatchHistory;
 import com.mchung.videoservice.service.VideoService;
+import com.mchung.videoservice.util.JwtUtil;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class VideoController {
 
     private final VideoService videoService;
+    private final JwtUtil jwtUtil;
 
     @GetMapping("/welcome")
     public String welcome(){
@@ -25,17 +28,22 @@ public class VideoController {
     }
 
     @PostMapping("/upload")
-    public Video upload(HttpServletRequest request, @RequestBody UploadVideoDto uploadVideoDto) {
+    public Video upload(HttpServletRequest request, @RequestBody UploadVideoDto uploadVideoDto, @RequestHeader (name="Authorization") String token) {
         log.info("upload video : {}", uploadVideoDto);
+        Claims claims = jwtUtil.getUserInfoFromToken(token.split(" ")[1].trim());
+        Long userId = Long.valueOf((int)claims.get("id"));
 
-        Video video = videoService.uploadVideo(1L, uploadVideoDto);
+        Video video = videoService.uploadVideo(userId, uploadVideoDto);
 
         return video;
     }
     @PostMapping("/watch")
-    public WatchHistory watch(HttpServletRequest request, @RequestBody WatchVideoDto watchVideoDto) {
+    public WatchHistory watch(HttpServletRequest request, @RequestBody WatchVideoDto watchVideoDto, @RequestHeader (name="Authorization") String token) {
         log.info("watch video : {}", watchVideoDto);
-        WatchHistory watchHistory = videoService.watchVideo(2L, watchVideoDto);
+        Claims claims = jwtUtil.getUserInfoFromToken(token.split(" ")[1].trim());
+        Long userId = Long.valueOf((int)claims.get("id"));
+
+        WatchHistory watchHistory = videoService.watchVideo(userId, watchVideoDto);
         return watchHistory;
     }
 }
